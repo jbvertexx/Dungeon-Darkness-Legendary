@@ -1,0 +1,1 @@
+scriptname jbMOScanNPCThread17 extends jbMOScanNPCThread

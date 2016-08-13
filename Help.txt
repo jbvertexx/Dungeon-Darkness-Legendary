@@ -1,0 +1,13 @@
+Here are some differences between this one and Eternal Darkness / Sightless Senses.  Before I list them, it's important to know that Eternal Darkness actually used two methods for disabling lights.  The first was a single massive script that ran to disable lights in all dungeons.  This initial script didn't work for some people (including me, which is why I set about with this mod).  It also relied on lists of the objects actually placed in specific dungeons, so any light placed by another mod, or if you were in a dungeon added by another mod, the script didn't work.  The 2nd method was an optional one enabled in the MCM and was the same method as found in Sightless Sensess by kuertee.  This 2nd method uses dynamic scripting as you roam the dungeon, attaching alias scripts to nearby lights that caused them to turn off, hopefully before you see them.  It's very elegant in the way it works, but some people don't like having continuously running scripts.
+
+1.  DISDD runs scripts once upon entry of each dungeon for about 30-60 seconds, then the scripts stop running.  It works for any dungeon added by other mods as long as that mod uses vanilla assets and have location keywords set correctly (i.e. Falskaar, Forgotten Dungeons and most other mods I've checked do).
+
+2.  Glowing fogs, all fires, torch sconces and flaming oil traps are all handled by DISDD.  This will result in seriously and completely dark dungeons.
+
+3.  DISDD can be enabled or disabled at any time.
+
+4.  You have control over lighting by specifying Actor type and Location type preferences in the MCM.  This provides a the option for an immersive experience based on your belief/interpretation of Skyrim lore.  If you think Vampires only like a few candles, Riekling have a preference for fire, Draugr really only maintain a few sporadic fires, Dwemer can maintain Dwarven lighting but humans cannot, you can set all those preferences up in the MCM.
+
+5.  NPC Scan distances are more accurate.  The vanilla Papyrus distance functions seem to not take Z into account, so DISDD has it's own distance calculation functions that are more accurate.  The result is more consistent lighting in occupied areas with a slow diminishing as you move into darkness.
+
+Some potential disadvantages:  DISDD does not have a lighting spell (yet); some may find the scripting each time one enters a dungeon to be too disruptive to gameplay; DISDD also does not have a single function to re-enable all lights turned off.  The Sigh scripts re-enable disabled lights as you leave the dungeon.  The ED script has a function to turn everything back on.

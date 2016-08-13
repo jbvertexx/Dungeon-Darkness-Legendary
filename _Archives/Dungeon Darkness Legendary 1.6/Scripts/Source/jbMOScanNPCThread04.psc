@@ -1,0 +1,1 @@
+scriptname jbMOScanNPCThread04 extends jbMOScanNPCThread

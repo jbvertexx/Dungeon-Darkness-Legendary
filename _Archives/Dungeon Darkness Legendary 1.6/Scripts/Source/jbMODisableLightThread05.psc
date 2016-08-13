@@ -1,0 +1,1 @@
+scriptname jbMODisableLightThread05 extends jbMODisableLightThread

@@ -1,0 +1,1 @@
+scriptname jbMOScanNPCThread09 extends jbMOScanNPCThread
