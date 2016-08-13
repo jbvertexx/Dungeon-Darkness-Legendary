@@ -1,5 +1,7 @@
 Scriptname jbMOStaticAliasScript extends ReferenceAlias
 
+Import Math
+
 jbMOMainQS Property theMainQS Auto
 
 ObjectReference theLight
@@ -7,9 +9,13 @@ Form theLightBase
 ObjectReference theNearbyLightBulb
 FormList theLightsList
 FormList theCandleLightSourceList
+FormList theCandleLightsOffList
 FormList theELFXCandleSmokeList
+FormList theMarkerList
 jbMOUtils jbUtils
 jbMOOptions Options
+Activator theCandleMarkerBig
+Activator theCandleMarkerSmall
 
 Event onInit()
 
@@ -25,10 +31,15 @@ if self.getowningquest().isrunning()
 
 	debug.trace(self+" Activated for Reference: "+theLight)
 	if theLight
+
 		Options = theMainQS.Options
 		theLightsList = theMainQS.lLights
 		theCandleLightSourceList = theMainQS.lCandleLightSources
+		theCandleLightsOffList = theMainQS.lCandleLightsOff
 		theELFXCandleSmokeList = theMainQS.lELFXCandleSmoke
+		theMarkerList = theMainQS.lLightMarkers
+		theCandleMarkerBig = theMainQS.CandleMarkerBig
+		theCandleMarkerSmall = theMainQS.CandleMarkerSmall
 		theLightBase = theLight.getBaseObject()
 
 		Result = takeAction()
@@ -42,6 +53,7 @@ endEvent
 
 Bool Function takeAction()
 
+	Bool tookAction = False
 	theNearbyLightBulb = Game.FindClosestReferenceOfAnyTypeInListFromRef(theLightsList,theLight,200)
 	if theNearbyLightBulb && theNearbyLightBulb.isEnabled()
 		jbUtils.DebugTrace("Lit light bulb "+theNearbyLightBulb+" found near "+theLight)
@@ -61,10 +73,18 @@ Bool Function takeAction()
 		;Now disable the light
 		theLight.disable()
 		jbUtils.DebugTrace("Disabled "+theLight)
-		Return True
+		tookAction = True
 	endIf
 	
-	Return False
+	if Options.enableCandleLighter && theNearbyLightBulb && !Game.FindClosestReferenceOfAnyTypeInListFromRef(theMarkerList, theLight, 100)
+
+		objectreference newMarker = theLight.placeAtMe(theFireMarker)
+		jbUtils.DebugTrace("New marker "+newMarker+" placed at "+theLight)
+		(newMarker as jbMOSconceFireLighterScript).setRefs(theLight,theNearbyLightBulb)
+	endIf
+	
+	
+	Return tookAction
 
 endFunction
 

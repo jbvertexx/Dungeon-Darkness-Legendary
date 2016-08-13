@@ -63,9 +63,11 @@ Bool Function takeAction()
 	endIf
 	
 	if Options.enableFireLighter && theNearbyLightBulb && !Game.FindClosestReferenceOfAnyTypeInListFromRef(theMarkerList, theLight, 100)
+	
+	
 		objectreference newMarker = theLight.placeAtMe(theFireMarker)
 		jbUtils.DebugTrace("New marker "+newMarker+" placed at "+theLight)
-		(newMarker as jbMOSconceFireLighterScript).setRefs(theLight,theNearbyLightBulb)
+		(newMarker as jbMOCandleLighterScript).setRefs(theLight,theNearbyLightBulb)
 	endIf
 
 	Return tookAction
