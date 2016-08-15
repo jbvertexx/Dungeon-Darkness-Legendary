@@ -21,7 +21,7 @@ if self.getowningquest().isrunning()
 	jbUtils = theMainQS.jbUtils
 
 	theLight = self.getRef()
-	debug.trace(self+" Activated for Reference: "+theLight)
+	jbUtils.DebugTrace(self+" Activated for Reference: "+theLight)
 
 	if theLight
 

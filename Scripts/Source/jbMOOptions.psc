@@ -16,6 +16,7 @@ bool Opt_doDwemer
 bool Opt_giveSpell
 bool Opt_noLocPrompt
 bool Opt_enableFireLighter
+bool Opt_enableCandleLighter
 bool Opt_STInstalled
 bool Opt_STDisable
 bool Opt_ELFXInstalled
@@ -60,7 +61,11 @@ Function doUpdate()
 		version = 1.7
 	endIf
 	
-	version = 2.0
+	if version < 2.0
+		Opt_enableCandleLighter = true
+	endIf
+	
+	version = 2.1
 	
 endFunction
 
@@ -188,6 +193,19 @@ bool Property enableFireLighter
 	
 	bool Function Get()
 		return Opt_enableFireLighter
+	EndFunction
+	
+endProperty
+
+bool Property enableCandleLighter
+
+	Function Set(bool value)
+		Opt_enableCandleLighter = value
+		jbUtils.DebugTrace("enableCandleLighter set to "+Opt_enableCandleLighter)
+	endFunction
+	
+	bool Function Get()
+		return Opt_enableCandleLighter
 	EndFunction
 	
 endProperty
@@ -547,7 +565,8 @@ Event OnInit()
 	Opt_STDisable = true
 	Opt_ELFXInstalled = false
 	Opt_ELFXDisableCandleSmoke = false
-	Opt_enableFireLighter = false
+	Opt_enableFireLighter = true
+	Opt_enableCandleLighter = true
 	Opt_NPCScanDist = gvOpt_NPCScanDist.getvalue()
 	Opt_OccupiedProb = gvOpt_OccupiedProb.getvalue()
 	Opt_UnoccupiedProb = gvOpt_UnoccupiedProb.getvalue()
@@ -708,6 +727,13 @@ Function Toggle_enableFireLighter()
 
 	enableFireLighter = !enableFireLighter
 	jbUtils.DebugTrace("enableFireLighter set to "+Opt_enableFireLighter)
+
+EndFunction
+
+Function Toggle_enableCandleLighter()
+
+	enableCandleLighter = !enableCandleLighter
+	jbUtils.DebugTrace("enableCandleLighter set to "+Opt_enableCandleLighter)
 
 EndFunction
 
@@ -882,6 +908,7 @@ Function dumpOptions()
 	debug.trace("ELFXInstalled: "+Opt_ELFXInstalled)
 	debug.trace("ELFXDisableCandleSmoke: "+Opt_ELFXDisableCandleSmoke)
 	debug.trace("enableFireLighter: "+Opt_enableFireLighter)
+	debug.trace("enableCandleLighter: "+Opt_enableCandleLighter)
 	debug.trace("NPCScanDist: "+Opt_NPCScanDist)
 	debug.trace("OccupiedProb: "+Opt_OccupiedProb)
 	debug.trace("UnoccupiedProb: "+Opt_UnoccupiedProb)

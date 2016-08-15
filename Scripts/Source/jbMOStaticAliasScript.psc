@@ -14,8 +14,8 @@ FormList theELFXCandleSmokeList
 FormList theMarkerList
 jbMOUtils jbUtils
 jbMOOptions Options
-Activator theCandleMarkerBig
-Activator theCandleMarkerSmall
+jbMOCandleArraysScript Candles
+Form theCandleMarker
 
 Event onInit()
 
@@ -33,13 +33,12 @@ if self.getowningquest().isrunning()
 	if theLight
 
 		Options = theMainQS.Options
+		Candles = theMainQS.CandleArrays
 		theLightsList = theMainQS.lLights
 		theCandleLightSourceList = theMainQS.lCandleLightSources
 		theCandleLightsOffList = theMainQS.lCandleLightsOff
 		theELFXCandleSmokeList = theMainQS.lELFXCandleSmoke
 		theMarkerList = theMainQS.lLightMarkers
-		theCandleMarkerBig = theMainQS.CandleMarkerBig
-		theCandleMarkerSmall = theMainQS.CandleMarkerSmall
 		theLightBase = theLight.getBaseObject()
 
 		Result = takeAction()
@@ -76,13 +75,34 @@ Bool Function takeAction()
 		tookAction = True
 	endIf
 	
-	if Options.enableCandleLighter && theNearbyLightBulb && !Game.FindClosestReferenceOfAnyTypeInListFromRef(theMarkerList, theLight, 100)
+	if Options.enableCandleLighter && theNearbyLightBulb
 
-		objectreference newMarker = theLight.placeAtMe(theFireMarker)
-		jbUtils.DebugTrace("New marker "+newMarker+" placed at "+theLight)
-		(newMarker as jbMOSconceFireLighterScript).setRefs(theLight,theNearbyLightBulb)
+		;Get values for marker placement
+		Int CandleIndexVal = theCandleLightSourceList.find(theLightBase)
+		theCandleMarker = theMarkerList.getAt(Candles.MarkerSelect[CandleIndexVal])
+		Float CandleXOffset = Candles.CandleXOffset[CandleIndexVal]
+		Float CandleYOffset = Candles.CandleYOffset[CandleIndexVal]
+		Float CandleZOffset = Candles.CandleZOffset[CandleIndexVal]
+		Float ZRotation = theLight.getAngleZ()
+		Bool noOffset = (CandleXOffset == 0.0 && CandleYOffset == 0.0 && CandleZOffset == 0.0)
+
+		If ZRotation != 0.0
+			If CandleXOffset != 0.0
+				CandleYOffset = (-1.0)*CandleXOffset*sin(ZRotation)
+				CandleXOffset = CandleXOffset*cos(ZRotation)
+			ElseIf CandleYOffset != 0.0
+				CandleXOffset = CandleYOffset*sin(ZRotation)
+				CandleYOffset = CandleYOffset*cos(ZRotation)
+			EndIf
+		EndIf
+		
+		objectreference newMarker = theLight.placeAtMe(theCandleMarker)
+		newMarker.MoveTo(theLight,CandleXOffset,CandleYOffset,CandleZOffset,noOffset)
+		jbUtils.DebugTrace("New marker "+newMarker+" base "+theCandleMarker+" placed at "+theLight+" Offsets: "+CandleXOffset+","+CandleYOffset+","+CandleZOffset)
+		jbUtils.DebugTrace("Marker "+newMarker+" position: "+newMarker.getPositionX()+","+newMarker.getPositionY()+","+newMarker.getPositionZ())
+		jbUtils.DebugTrace("Light "+theLight+" position: "+theLight.getPositionX()+","+theLight.getPositionY()+","+theLight.getPositionZ())
+		(newMarker as jbMOCandleLighterScript).setRefs(theLight,theNearbyLightBulb)
 	endIf
-	
 	
 	Return tookAction
 

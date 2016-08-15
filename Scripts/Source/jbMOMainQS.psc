@@ -25,13 +25,12 @@ FormList Property lELFXCandleSmoke Auto
 Activator Property torchActivator Auto
 Activator Property oilLamp Auto
 Activator Property FireMarker Auto
-Activator Property CandleMarkerBig Auto
-Activator Property CandleMarkerSmall Auto
 Keyword Property actorTypeNPCKW Auto
 Keyword Property actorTypeGhostKW Auto
 Message Property resetAllDungeonsMessage Auto
 jbMOOptions Property Options Auto
 jbMOUtils Property jbUtils Auto
+jbMOCandleArraysScript Property CandleArrays Auto
 FormList Property lSunLights Auto
 FormList Property lFogsandMists Auto
 FormList Property lAmbients Auto

@@ -32,6 +32,7 @@ if page == "Basic Config"
 	SetCursorPosition(1)
 	AddHeaderOption("Re-lighting Options")
 	AddToggleOptionST("OPTION_enableFireLighter", "Enable lighting fires",Options.enableFireLighter)
+	AddToggleOptionST("OPTION_enableCandleLighter", "Enable lighting candles",Options.enableCandleLighter)
 	if Options.STInstalled || Options.ELFXInstalled
 			AddHeaderOption("Mod Compatibility")
 	endIf
@@ -250,8 +251,24 @@ state OPTION_enableFireLighter
 	endEvent
 
     event OnDefaultST()
-		Options.enableFireLighter = false
+		Options.enableFireLighter = true
 		SetToggleOptionValueST(Options.enableFireLighter)
+    endEvent
+
+    event OnHighlightST()
+        SetInfoText("Enable activators for fires - light and extinguish dungeon fires in sconces, torches, cooking fires, etc.")
+    endEvent
+endState
+
+state OPTION_enableCandleLighter
+    event OnSelectST()
+		Options.Toggle_enableCandleLighter()
+		SetToggleOptionValueST(Options.enableCandleLighter)
+	endEvent
+
+    event OnDefaultST()
+		Options.enableCandleLighter = true
+		SetToggleOptionValueST(Options.enableCandleLighter)
     endEvent
 
     event OnHighlightST()
